@@ -1,3 +1,9 @@
+use std::{result, sync::{Arc, Mutex}};
+
+use actix_web::web;
+use sqlx::PgPool;
+use state::State;
+
 
 
 //* domain */
@@ -181,13 +187,26 @@ mod endpoints{
     }
 
 
+    pub fn config(cfg: &mut web::ServiceConfig){
+        cfg.service(playlist);
+        cfg.service(create_playlist);
+        cfg.service(get_playlist);
+        cfg.service(delete_playlist);
+        cfg.service(update_playlist);
+        cfg.service(partial_update_playlist);
+    }
 }
 
 
 
+#[actix_web::main]
+async fn main() -> result::Result<()> {
+    let database_url= "postgresql://username:password@localhost/database_name";
+    let pool = PgPool::connect(database_url).await.expect("Failed to connect to the database.");
 
+    //configura el estado compartido para la aplicación Actix
+    let state = web::Data::new(State{
+        playlist: Arc::new(Mutex::new(Vec::new())),
+    });
 
-
-
-fn main() {
 }
