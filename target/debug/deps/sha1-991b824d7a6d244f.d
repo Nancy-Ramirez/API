@@ -1,0 +1,10 @@
+c:\Users\Vertex Studio\Desktop\Nancy NAS\API-REST\compl\API\target\debug\deps\libsha1-991b824d7a6d244f.rmeta: C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\lib.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\soft.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\x86.rs
+
+c:\Users\Vertex Studio\Desktop\Nancy NAS\API-REST\compl\API\target\debug\deps\libsha1-991b824d7a6d244f.rlib: C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\lib.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\soft.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\x86.rs
+
+c:\Users\Vertex Studio\Desktop\Nancy NAS\API-REST\compl\API\target\debug\deps\sha1-991b824d7a6d244f.d: C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\lib.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\soft.rs C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\x86.rs
+
+C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\lib.rs:
+C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress.rs:
+C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\soft.rs:
+C:\Users\Vertex\ Studio\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha1-0.10.6\src\compress\x86.rs:
