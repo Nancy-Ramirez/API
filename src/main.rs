@@ -1,10 +1,8 @@
 use std::{result, sync::{Arc, Mutex}};
 
-use actix_web::web;
+use actix_web::{web, App, HttpServer};
 use sqlx::PgPool;
 use state::State;
-
-
 
 //* domain */
 mod domain{
@@ -57,12 +55,15 @@ mod dtos{
 
 //* endpoints */
 mod endpoints{
-    use actix_web::{delete, error::{self, ErrorNotFound}, get, patch, post, put, web::{self, Data}, HttpResponse, Responder};
+    use actix_web::{delete, error::{self}, get, patch, post, put, web::{self}, HttpResponse, Responder};
     use sqlx::{PgPool, Row};
-    use crate::{domain::{Playlist, Song}, dtos::{self, CreatePlaylist, Info, PartialUpdatePlaylist}, state::State};
+    use crate::{domain::Playlist, dtos::{CreatePlaylist, Info, PartialUpdatePlaylist}};
 
-    //*Función GET All*/
+
+
+    //*Función GET ALL*/
     #[get("/playlist")]
+
     async fn playlist(pool: web::Data<PgPool>) -> impl Responder{
         let query= "SELECT * FROM dbCargo";
 
@@ -86,7 +87,7 @@ mod endpoints{
         }
     }
 
-    //*Función get_id */
+    //*Función GET_ID */
     #[get("/playlist/{id}")]
     async fn get_playlist(info: web::Path<Info>, pool: web::Data<PgPool>) -> impl Responder{
         let query = "SELECT * FROM dbCargo WHERE id=$1";
@@ -112,7 +113,6 @@ mod endpoints{
 
         let query = "INSERT INTO dbCargo (name) VALUES ($1) RETURNING id, name";
     
-        // Intenta ejecutar la consulta INSERT con RETURNING 
         if let Ok(row) = sqlx::query(query)
             .bind(&dto.name)
             .fetch_one(pool.as_ref())
@@ -122,10 +122,8 @@ mod endpoints{
                 name: row.try_get::<String, _>("name").unwrap_or_default(),
                 songs: vec![],
             };
-            // Si la inserción fue exitosa, simplemente retorna un mensaje de éxito
             Ok(web::Json(new_playlist))
         } else {
-            // Si hubo un error en la inserción, retorna un mensaje de error
             Err(error::ErrorInternalServerError("Error creating playlist"))
         }
         
@@ -146,6 +144,7 @@ mod endpoints{
         }
     }
 
+ 
     //*Función PUT */
     #[put("/playlist/{id}")]
     async fn update_playlist(info: web::Path<Info>, pool: web::Data<PgPool>, dto: web::Json<CreatePlaylist>) -> impl Responder{
@@ -186,7 +185,6 @@ mod endpoints{
              
     }
 
-
     pub fn config(cfg: &mut web::ServiceConfig){
         cfg.service(playlist);
         cfg.service(create_playlist);
@@ -197,16 +195,26 @@ mod endpoints{
     }
 }
 
-
-
 #[actix_web::main]
-async fn main() -> result::Result<()> {
-    let database_url= "postgresql://username:password@localhost/database_name";
+async fn main() -> std::io::Result<()> {
+    // Configura la conexión a la base de datos PostgreSQL
+    let database_url = "postgresql://username:password@localhost/database_name";
     let pool = PgPool::connect(database_url).await.expect("Failed to connect to the database.");
 
-    //configura el estado compartido para la aplicación Actix
-    let state = web::Data::new(State{
+    // Configura el estado compartido para la aplicación Actix
+    let state = web::Data::new(State {
         playlist: Arc::new(Mutex::new(Vec::new())),
     });
 
+    // Inicia el servidor Actix Web
+    HttpServer::new(move || {
+        App::new()
+            .app_data(state.clone())
+            .app_data(web::Data::new(pool.clone()))
+            .configure(endpoints::config)  // Usa la función de configuración
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
 }
+
